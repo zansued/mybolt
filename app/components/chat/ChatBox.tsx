@@ -68,6 +68,10 @@ interface ChatBoxProps {
 export const ChatBox: React.FC<ChatBoxProps> = (props) => {
   return (
     <div
+      <div className="bg-orange-500/10 border border-orange-500/20 p-2 mb-3 text-[10px] text-orange-200 text-center w-full rounded-md shadow-sm">
+  <strong>💡 Mobile Tip:</strong> Not all models work perfectly. If you see a "Server Error," try switching models in the settings!
+</div>
+
       className={classNames(
         'relative bg-bolt-elements-background-depth-2 backdrop-blur p-3 rounded-lg border border-bolt-elements-borderColor relative w-full max-w-chat mx-auto z-prompt',
 
@@ -328,10 +332,6 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
               <kbd className="kdb px-1.5 py-0.5 rounded bg-bolt-elements-background-depth-2">Return</kbd> a new line
             </div>
           ) : null}
-          <div className="bg-orange-100 border-l-4 border-orange-500 p-3 mb-4 text-[10px] sm:text-xs text-orange-900 rounded shadow-sm">
-  <strong>💡 Mobile Tip:</strong> Not all models work perfectly. If you see a "Server Error," try switching to a different AI model in the settings!
-</div>
-
           <SupabaseConnection />
           <ExpoQrModal open={props.qrModalOpen} onClose={() => props.setQrModalOpen(false)} />
         </div>
