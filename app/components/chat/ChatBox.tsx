@@ -328,6 +328,10 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
               <kbd className="kdb px-1.5 py-0.5 rounded bg-bolt-elements-background-depth-2">Return</kbd> a new line
             </div>
           ) : null}
+          <div className="bg-orange-100 border-l-4 border-orange-500 p-3 mb-4 text-[10px] sm:text-xs text-orange-900 rounded shadow-sm">
+  <strong>💡 Mobile Tip:</strong> Not all models work perfectly. If you see a "Server Error," try switching to a different AI model in the settings!
+</div>
+
           <SupabaseConnection />
           <ExpoQrModal open={props.qrModalOpen} onClose={() => props.setQrModalOpen(false)} />
         </div>
