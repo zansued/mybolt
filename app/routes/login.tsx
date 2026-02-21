@@ -7,7 +7,8 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   
   const env = (context.cloudflare as any).env;
 
-  // This will check VITE_INVITE_CODE and any CODE_1, CODE_2 etc from the dashboard
+  // This will check any variable you add in the Cloudflare dashboard
+  // Name them CODE_1, CODE_2, etc.
   const allCodes = Object.keys(env)
     .filter((key) => key.startsWith("CODE_") || key === "VITE_INVITE_CODE")
     .map((key) => env[key]);
