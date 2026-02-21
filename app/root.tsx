@@ -1,15 +1,17 @@
-import { useLoaderData, Outlet, Scripts, ScrollRestoration, Meta, Links } from "@remix-run/react";
+import { Outlet, Scripts, ScrollRestoration, Meta, Links } from "@remix-run/react";
 import { redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare";
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const cookieHeader = request.headers.get("Cookie") || "";
+  
+  // Check if the user has the "is_allowed" cookie
   const isLogged = cookieHeader.includes("is_allowed=true");
 
-  // Allow access to login page
+  // Don't redirect if they are already on the login page
   if (url.pathname === "/login") return null;
 
-  // If not logged in, go to login page
+  // If they aren't logged in, send them to the login page
   if (!isLogged) {
     return redirect("/login");
   }
