@@ -1,4 +1,5 @@
 import AnthropicProvider from './providers/anthropic';
+import AvianProvider from './providers/avian';
 import CerebrasProvider from './providers/cerebras';
 import CohereProvider from './providers/cohere';
 import DeepseekProvider from './providers/deepseek';
@@ -23,6 +24,7 @@ import ZaiProvider from './providers/z-ai';
 
 export {
   AnthropicProvider,
+  AvianProvider,
   CerebrasProvider,
   CohereProvider,
   DeepseekProvider,
