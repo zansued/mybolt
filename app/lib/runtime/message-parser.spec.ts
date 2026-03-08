@@ -157,6 +157,58 @@ describe('StreamingMessageParser', () => {
       runTest(input, expected);
     });
   });
+
+  describe('file action with missing filePath', () => {
+    it('should not crash when filePath attribute is missing from file action', () => {
+      const callbacks = {
+        onArtifactOpen: vi.fn(),
+        onArtifactClose: vi.fn(),
+        onActionOpen: vi.fn(),
+        onActionClose: vi.fn(),
+      };
+
+      const parser = new StreamingMessageParser({
+        artifactElement: () => '',
+        callbacks,
+      });
+
+      // This input has a file action without filePath - previously caused
+      // "TypeError: Cannot read properties of undefined (reading 'endsWith')"
+      const input =
+        'Before <boltArtifact title="Some title" id="artifact_1"><boltAction type="file">some file content</boltAction></boltArtifact> After';
+
+      expect(() => parser.parse('message_1', input)).not.toThrow();
+
+      expect(callbacks.onActionOpen).toHaveBeenCalledTimes(1);
+      expect(callbacks.onActionClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not crash during streaming when filePath attribute is missing', () => {
+      const callbacks = {
+        onArtifactOpen: vi.fn(),
+        onArtifactClose: vi.fn(),
+        onActionOpen: vi.fn(),
+        onActionStream: vi.fn(),
+        onActionClose: vi.fn(),
+      };
+
+      const parser = new StreamingMessageParser({
+        artifactElement: () => '',
+        callbacks,
+      });
+
+      // Simulate streaming: first chunk has the action open but no close tag yet
+      const chunk1 =
+        'Before <boltArtifact title="Some title" id="artifact_1"><boltAction type="file">partial content';
+
+      expect(() => parser.parse('message_1', chunk1)).not.toThrow();
+
+      // Second chunk completes the action
+      const chunk2 = chunk1 + ' more content</boltAction></boltArtifact> After';
+
+      expect(() => parser.parse('message_1', chunk2)).not.toThrow();
+    });
+  });
 });
 
 describe('EnhancedStreamingMessageParser', () => {
